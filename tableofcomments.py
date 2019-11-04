@@ -12,9 +12,7 @@ import sublime_plugin
 import re
 
 
-#
 # > Plugin command
-#
 class table_of_comments_command(sublime_plugin.TextCommand):
 
     def run(self, edit, move=None, fold=None, unfold=None, generate=None):
@@ -132,7 +130,9 @@ class TableOfComments:
 
     def get_toc_region(self, view):
         title = get_setting('toc_title', str)
-        pattern = r'\/\*(\s|\*)*'+title+r'[^\/]*\/'
+        # pattern = r'\/\*(\s|\*)*'+title+r'[^\/]*\/'
+        # Allow for simple string search to find TOC locations
+        pattern = r'(\s|\*)*'+title+r'(\s|\*\/)*'
         matches = view.find_all(pattern)
         for region in (matches):
             if self.is_scope_or_comment(view, region):
@@ -147,6 +147,8 @@ class TableOfComments:
         return False
 
     def create_toc(self):
+        if not get_setting('make_toc', typeof=bool):
+            return
         view = self.view
         edit = self.edit
         region = self.get_toc_region(view)

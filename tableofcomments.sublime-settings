@@ -20,6 +20,10 @@
     /*
     * Table of contents options
     */
+
+    // whether to search for toc marker and make toc
+    "make_toc": false,
+
     "toc_start": "/*",          // Start table of contents with
     "toc_title": "TOC",         // Title to display (and look for) for table of contents creation
     "toc_line": "* ",           // Prefix of each line within table of contents
