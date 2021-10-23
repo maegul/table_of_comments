@@ -224,7 +224,7 @@ class TableOfComments:
         comment_chars = get_setting('comment_chars', str)
         # add potential whitespace before each comment character
         # but don't have whitespace as a potential singular start character
-        comment = [r'\s*'+c for c in re.escape(comment_chars)]  # type: ignore
+        comment = [r'\s*'+re.escape(c) for c in comment_chars]  # type: ignore
         comment = 'DIV'.join(comment)
         start = r''+comment.replace('DIV', '|')
         # build the pattern to match the comment
