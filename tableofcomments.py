@@ -222,9 +222,11 @@ class TableOfComments:
         view = self.view
         level_char = get_setting('level_char', str)
         comment_chars = get_setting('comment_chars', str)
-        comment = list(comment_chars)
-        comment = 'DIV'.join(comment_chars)
-        start = r'\s|'+re.escape(comment).replace('DIV', '|')
+        # add potential whitespace before each comment character
+        # but don't have whitespace as a potential singular start character
+        comment = [r'\s*'+c for c in comment_chars]  # type: ignore
+        comment = 'DIV'.join(comment)
+        start = r''+re.escape(comment).replace('DIV', '|')
         # build the pattern to match the comment
         pattern = r'^('+start+')*?('+format_pattern(level_char)+'+)\s*' + \
             r'(.+)('+start+')*?$'
