@@ -369,7 +369,7 @@ class TableOfComments:
         scope = view.scope_name(region.a + diff)
         # Check out scope
         comments_scope = ['comment']
-        disallow = ['string.quoted']
+        disallow = ['string.quoted', 'comment.block.documentation']
         for each in comments_scope:
             if scope.find(each) < 0:
                 return False
