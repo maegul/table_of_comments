@@ -224,14 +224,17 @@ class TableOfComments:
         comment_chars = get_setting('comment_chars', str)
         # add potential whitespace before each comment character
         # but don't have whitespace as a potential singular start character
-        comment = [r'\s*'+re.escape(c) for c in comment_chars]  # type: ignore
+        comment = [r'[ ]*'+re.escape(c) for c in comment_chars]  # type: ignore
         comment = 'DIV'.join(comment)
         start = r''+comment.replace('DIV', '|')
         # build the pattern to match the comment
-        pattern = r'^('+start+')*?('+format_pattern(level_char)+'+)\s*' + \
+        pattern = r'^('+start+')*?[ ]*('+format_pattern(level_char)+'+)\s*' + \
             r'(.+)('+start+')*?$'
         print('TOC DEBUG')
         print(comment, start, pattern)
+# \s*\/DIV\s*\*DIV\s*\#DIV\s*\|
+# \s*\/|\s*\*|\s*\#|\s*\|
+# ^(\s*\/|\s*\*|\s*\#|\s*\|)*?(>+)\s*(.+)(\s*\/|\s*\*|\s*\#|\s*\|)*?$
 
         matches = view.find_all(pattern)
         results = []
