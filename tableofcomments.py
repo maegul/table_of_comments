@@ -230,6 +230,8 @@ class TableOfComments:
         # build the pattern to match the comment
         pattern = r'^('+start+')*?('+format_pattern(level_char)+'+)\s*' + \
             r'(.+)('+start+')*?$'
+        print('TOC DEBUG')
+        print(comment, start, pattern)
 
         matches = view.find_all(pattern)
         results = []
